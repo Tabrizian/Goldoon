@@ -26,7 +26,8 @@ goldoon.register(app, '/goldoon');
 
 app.get('/goldoons', function (req, res) {
     goldoon.find({}, function (err, goldoons) {
-            res.render('home', goldoons);
+            res.render('home', {goldoons: goldoons});
+        console.log(goldoons);
         }
     );
 });
