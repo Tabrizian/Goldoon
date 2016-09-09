@@ -24,8 +24,11 @@ var goldoon = restful.model('Goldoon', GoldoonSchema).methods(['get', 'post', 'p
 
 goldoon.register(app, '/goldoon');
 
-app.get('/mammad', function (req, res){
-   res.render('home');
+app.get('/goldoons', function (req, res) {
+    goldoon.find({}, function (err, goldoons) {
+            res.render('home', goldoons);
+        }
+    );
 });
 app.listen(3000);
 module.exports = app;
