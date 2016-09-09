@@ -7,41 +7,25 @@ var app = express();
 var path = require('path');
 var exphbs = require('express-handlebars');
 
-
 var mongoose = restful.mongoose;
-
-app.engine('.hbs', exphbs({
-    defaultLayout: 'main',
-    extname: '.hbs',
-    layoutsDir: path.join(__dirname, 'views/layouts')
-}));
-
-app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'views'));
-
 
 // node-restful requirements ...
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.urlencoded({'extended': 'true'}));
 app.use(bodyParser.json());
-app.use(bodyParser.json({type:'application/vnd.api+json'}));
+app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
-
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 mongoose.connect('mongodb://localhost/goldoon');
 
-var goldoon = app.resource = restful.model('Goldoon', GoldoonSchema).
-    methods(['get', 'post', 'put', 'delete']);
+var goldoon = restful.model('Goldoon', GoldoonSchema).methods(['get', 'post', 'put', 'delete']);
 
 goldoon.register(app, '/goldoon');
 
-app.get('/goldoons', function(req, res) {
-    //goldoon.find({}, function(err, goldoons) {
-        res.render('home', {
-            body: 'John'
-        //});
-    });
+app.get('/mammad', function (req, res){
+   res.render('home');
 });
-
 app.listen(3000);
 module.exports = app;
