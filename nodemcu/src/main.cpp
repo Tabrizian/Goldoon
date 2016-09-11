@@ -31,7 +31,12 @@ void setup() {
 
     IPAddress ip = WiFi.localIP();
     StaticJsonBuffer<300> jsonBuffer;
-    String json = goldoon_get();
+    String json;
+    while(!json) {
+        json = goldoon_get();
+        delay(3000);
+
+    }
     JsonArray& root = jsonBuffer.parseArray(json.c_str());
 
     if(!root.success()) {
