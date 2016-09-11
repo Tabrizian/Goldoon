@@ -30,13 +30,16 @@ void setup() {
     initWiFi();
 
     IPAddress ip = WiFi.localIP();
+
     StaticJsonBuffer<300> jsonBuffer;
     String json;
-    while(!json) {
+
+    while(json.length() <= 0) {
         json = goldoon_get();
         delay(3000);
 
     }
+    Serial.println(json);
     JsonArray& root = jsonBuffer.parseArray(json.c_str());
 
     if(!root.success()) {
@@ -56,6 +59,7 @@ void setup() {
     }
 
     if(!exists) {
+        Serial.println("Goldoon created");
         id = String(goldoon_create());
         Serial.println(id);
     }
