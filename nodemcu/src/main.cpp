@@ -85,7 +85,7 @@ void initWiFi() {
 const char* goldoon_create() {
     String request = generateRequest(String("ip=" + WiFi.localIP().toString()), "/goldoon");
     Serial.println(request);
-    StaticJsonBuffer<300> jsonBuffer;
+    StaticJsonBuffer<500> jsonBuffer;
 
     String json =  getBody(request);
     JsonObject& root = jsonBuffer.parseObject(json.c_str());
