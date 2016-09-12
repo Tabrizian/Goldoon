@@ -32,11 +32,13 @@ void setup() {
     IPAddress ip = WiFi.localIP();
 
     StaticJsonBuffer<300> jsonBuffer;
-    String json;
+    String json = "";
 
+    Serial.println(json.length());
     while(json.length() <= 0) {
         json = goldoon_get();
         delay(3000);
+        Serial.println(json.length());
 
     }
     Serial.println(json);
@@ -80,7 +82,9 @@ void initSerial() {
 
 void initWiFi() {
     // WiFi Connection Initiation
+    delay(3000);
     Serial.printf("Connecting to %s ", ssid);
+    Serial.println(String(ssid) + " " + password);
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
     {
@@ -94,7 +98,7 @@ void initWiFi() {
 const char* goldoon_create() {
     String request = generateRequest(String("ip=" + WiFi.localIP().toString()), "/goldoon");
     Serial.println(request);
-    StaticJsonBuffer<500> jsonBuffer;
+    StaticJsonBuffer<300> jsonBuffer;
 
     String json =  getBody(request);
     JsonObject& root = jsonBuffer.parseObject(json.c_str());
@@ -148,6 +152,8 @@ String getBody(String request) {
         client.stop();
         return json;
     }
+
+    return "";
 }
 
 String generateRequest(String body, String path) {
