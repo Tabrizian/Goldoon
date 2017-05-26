@@ -3,8 +3,8 @@
 #include <ArduinoJson.h>
 
 
-const char* ssid = "IP-WDL-RT2T2R";
-const char* password = "Tabrizian1";
+const char* ssid = "YOUR_WIFI_NAME";
+const char* password = "YOUR_WIFI_PASSWORD";
 
 const char* serverAddress = "192.168.1.6";
 const int baudRate = 115200;
